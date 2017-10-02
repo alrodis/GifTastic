@@ -36,6 +36,8 @@ function renderButtons () {
 // upon clicking of button, call to giphy api is made and then retuns results to page
 // this is not working below, but I did get it to work in class exercises 
 $("button").on("click", function(){
+	//pretty sure something is up with this line below, on click does not work
+	// tried var animalName = $(this).data("name"); which doesn't work either
 	var animalName = $(this).attr("data-name");
 	console.log(animalName);
 
@@ -97,26 +99,6 @@ $("#addAnimal").on("click", function(event){
 
 
 renderButtons();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

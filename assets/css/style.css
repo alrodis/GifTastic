@@ -1,0 +1,10 @@
+body {
+	/*background-color: red;*/
+}
+
+button,
+div,
+form,
+input{
+	margin: 10px;
+}

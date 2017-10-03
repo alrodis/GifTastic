@@ -39,3 +39,27 @@ img {
 	border-radius: 4px;
 	border: 3px solid black;
 }
+
+label {
+	margin-left: 12px;
+}
+
+#add-animals {
+/*	
+	margin: 0px auto;
+	float: left;
+    display: inline-block;*/
+    /*border-radius: 4px;
+	border: 3px solid black;
+	height: 500px;
+*/
+
+}
+
+#animalGif {
+	display: inline-block;
+}
+
+.gif {
+	height: 100px;
+}

@@ -48,6 +48,7 @@ function renderButtons () {
 				console.log(response);
 				for (var j = 0; j < response.data.length; j++) {
 					var animalDiv = $("<div>");
+					animalDiv.attr('id', 'animalGif')
 					var p = $("<p>").text("Rating: "+response.data[j].rating);
 					var animalImage = $("<img>");
 					animalImage.addClass("gif");

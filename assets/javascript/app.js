@@ -1,67 +1,90 @@
 // Overall goal for code below:
-// display buttons of animals
-// is user adds an animal in text box, then new button is added for that animal
-// clicking on a button will bring in 10 giphs of that animal
-// giphs displayed on page will be still images
-// when user clicks on still image, the image will animate
-// when user clicks on animated image, it will go back to a still image
-
-
+// -Display buttons of animals
+// -If user adds an animal via text box, then new button is added for that animal
+// -Clicking on a button will bring in 10 giphs of that animal
+// -Giphs displayed on page will be still images
+// -When user clicks on still image, the image will animate
+// -When user clicks on animated image, it will go back to a still image
 $(document).ready(function(){
 
 // create an array of animal names for initial button content on page
-var animals = ["cat", "dog", "chicken", "cow", "pig", "canary", "peacock", "goat", "horse", "crab"];
+var animals = ["cat", "dog", "chicken", "cow", "pig", "beaver", "peacock", "goat", "horse", "crab"];
 
-
-
+//function to render buttons on the page based upon animals in the array
 function renderButtons () {
+
 	$("#animalButtons").empty();
 	for (var i = 0; i < animals.length; i++) {
 		var a = $("<button>");
 		a.addClass("animals");
+		// a.addClass("btn-group btn-group-lg");
 		a.attr("data-name", animals[i]);
 		a.text(animals[i]);
 		$("#animalButtons").append(a);
-		console.log(a);
+		//console.log(a);
+	
+
+		// in the intial building process...below is a test of an on click event to see if anything happens when clicking rendered buttons
+		// function alertAnimalName() {
+		// 	var animalName = $(this).attr("data-name");
+		// 	alert(animalName);
+		// }
+		// $(document).on("click", ".animals", alertAnimalName);
+
+		// Upon clicking of animal button, call to giphy api is made, which then retuns results to the html page
+		a.on("click", function(){
+			$("#add-animals").empty();
+			console.log("animal button click successful!");
+			//pretty sure something is up with this line below, on click does not work
+			// tried var animalName = $(this).data("name"); which doesn't work either
+			var animalName = $(this).attr("data-name");
+			console.log(animalName);
+
+			var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +animalName+"&api_key=MzRMOL6VCOPWmGq3DnuBMaCmRmfI9nDH&limit=10";
+			console.log(queryURL);
+
+			$.ajax({url:queryURL, method: "GET"})
+			.done(function(response){
+				console.log(response);
+				for (var j = 0; j < response.data.length; j++) {
+					var animalDiv = $("<div>");
+					var p = $("<p>").text("Rating: "+response.data[j].rating);
+					var animalImage = $("<img>");
+					animalImage.addClass("gif");
+					animalImage.attr("src", response.data[j].images.fixed_height_still.url);
+					var still = response.data[j].images.fixed_height.url
+					var animate = response.data[j].images.fixed_height_still.url
+					animalImage.attr("data-still", still);
+					animalImage.attr("data-animate", animate);
+					animalImage.attr("data-state", "still");
+					animalDiv.append(p);
+					animalDiv.append(animalImage);
+					// $("#add-animals").empty();
+					$("#add-animals").prepend(animalDiv);
+
+			$(".gif").on("click", function() {
+      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+		      var state = $(this).attr("data-state");
+		      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+		      // Then, set the image's data-state to animate
+		      // Else set src to the data-still value
+		      if (state === "still") {
+		        $(this).attr("src", $(this).attr("data-animate"));
+		        $(this).attr("data-state", "animate");
+		      } else {
+		        $(this).attr("src", $(this).attr("data-still"));
+		        $(this).attr("data-state", "still");
+		      }
+    });
+
+				}
+			})
+		})
 	}
 }
 
-// // testing on click event to see if anything happens when clicking rendered buttons
-// function alertAnimalName() {
-// 	var animalName = $(this).attr("data-name");
-// 	alert(animalName);
-// }
-// $(document).on("click", ".animals", alertAnimalName);
 
-// upon clicking of button, call to giphy api is made and then retuns results to page
-// this is not working below, but I did get it to work in class exercises 
-$("button").on("click", function(){
-	//pretty sure something is up with this line below, on click does not work
-	// tried var animalName = $(this).data("name"); which doesn't work either
-	var animalName = $(this).attr("data-name");
-	console.log(animalName);
-
-	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +animalName+"&api_key=MzRMOL6VCOPWmGq3DnuBMaCmRmfI9nDH&limit=10";
-	console.log(queryURL);
-
-	$.ajax({url:queryURL, method: "GET"})
-	.done(function(response){
-		console.log(response);
-		for (var j = 0; j < response.data.length; i++) {
-			var animalDiv = $("<div>");
-			var p = $("<p>").text("Rating: "+response.data[j].rating);
-			var animalImage = $("<img>");
-			animalImage.attr("src", response.data[j].images.fixed_height.url);
-			animalDiv.append(p);
-			animalDiv.append(animalImage);
-			$("#add-animals").prepend(animalDiv);
-		}
-	})
-})
-
-// below is when user adds a new animal and clicks submit,
-// a new button for the animal input will render a new button and 
-// also be added to the animals array
+//when user adds a new animal, this function will render a new button and push that new animal to the array
 $("#addAnimal").on("click", function(event){
 	event.preventDefault();
 	var animal = $("#animal-input").val().trim();
@@ -70,39 +93,6 @@ $("#addAnimal").on("click", function(event){
 	renderButtons();
 });
 
-// need to change the state of image from still to animated and back again when user clicks on image
-// I had gotten this to work with a class exercise, and it should be the same logic here
-// although, I'm not sure how to get multiple versions of the same image from giphy (still vs animated)
-// code from class exercise
-// <body>
-//   <img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
-//   <img src="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-still="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-animate="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200.gif" data-state="still" class="gif">
-//   <img src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif" data-state="still" class="gif">
-//   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-//   <script type="text/javascript">
-// </body>  
-
-// $(".gif").on("click", function() {
-//       // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-//       var state = $(this).attr("data-state");
-//       // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-//       // Then, set the image's data-state to animate
-//       // Else set src to the data-still value
-//       if (state === "still") {
-//         $(this).attr("src", $(this).attr("data-animate"));
-//         $(this).attr("data-state", "animate");
-//       } else {
-//         $(this).attr("src", $(this).attr("data-still"));
-//         $(this).attr("data-state", "still");
-//       }
-//     });
-
-
 renderButtons();
-
-
-
-
-
 
 });

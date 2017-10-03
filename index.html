@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>GifTastic</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <meta charset="UTF-8">
+    <title>GifTastic</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
-	<div id="maincontainer" class="container-fluid">
-		<div id="animalButtons">
-			
-		</div>
-
-		<form id="animal-form">
-			<label for="animal-input">Add an animal</label>
-			<input type="text" id="animal-input"><br>
-
-			<input id="addAnimal" type="submit" value="Submit">
-
-		</form>
-
-		<div id="add-animals"></div>
-
-	</div>
+    <div id="main container" class="container-fluid">
+        <div class="jumbotron">
+            <h1>Funny Animal GIFs!!</h1>
+            <p>Who doesn't love funny animal GIFs? Click on a button below to get the laughs going.</p>
+            <p>You can also add and view additional animals by typing in the "Add an animal" field and clicking "Submit".</p>
+            <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p> -->
+        </div>
+        <div id="animalButtons"></div>
+        <div class="row">
+            <div class="col-md-8">
+                <div id="add-animals"></div>
+            </div>
+            <div class="col-md-3">
+                <form id="animal-form">
+                    <label for="animal-input">Add an animal</label>
+                    <input type="text" id="animal-input">
+                    <br>
+                    <input id="addAnimal" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
-
-
 <script src="assets/javascript/app.js"></script>
+
 </html>

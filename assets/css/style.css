@@ -1,10 +1,41 @@
 body {
-	/*background-color: red;*/
+/*background: url("../images/concrete_seamless.png");*/
+background-color: #99ccff;
 }
 
-button,
+.jumbotron {
+/*	background-color: #ffb3b3;*/
+border-style: solid;
+border-width: 4px;
+}
+
+/*button,*/
 div,
 form,
 input{
 	margin: 10px;
+}
+
+button {
+	margin: 10px;
+	background-color: #e7e7e7; color: black;
+	border-radius: 4px;
+	border: 3px solid black;
+}
+
+#addAnimal {
+	margin: 10px;
+	background-color: #e7e7e7; color: black;
+	border-radius: 4px;
+	border: 3px solid black;
+}
+
+img {
+	border-radius: 4px;
+	border: 4px solid black;
+}
+
+#animal-input {
+	border-radius: 4px;
+	border: 3px solid black;
 }

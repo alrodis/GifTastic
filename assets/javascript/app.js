@@ -40,7 +40,7 @@ function renderButtons () {
 			var animalName = $(this).attr("data-name");
 			console.log(animalName);
 
-			var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +animalName+"&api_key=MzRMOL6VCOPWmGq3DnuBMaCmRmfI9nDH&limit=10";
+			var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +animalName+"&api_key=MzRMOL6VCOPWmGq3DnuBMaCmRmfI9nDH&limit=10";
 			console.log(queryURL);
 
 			$.ajax({url:queryURL, method: "GET"})
